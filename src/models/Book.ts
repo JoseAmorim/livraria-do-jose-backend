@@ -13,9 +13,6 @@ const bookSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  currentPage: {
-    type: Number,
-  },
   author: {
     type: Schema.Types.ObjectId,
     ref: "Author",
@@ -24,10 +21,12 @@ const bookSchema = new mongoose.Schema({
   publisher: {
     type: Schema.Types.ObjectId,
     ref: "PublishingCompany",
+    required: true,
   },
   genre: {
     type: Schema.Types.ObjectId,
     ref: "Genre",
+    required: true,
   },
 })
 

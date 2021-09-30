@@ -1,15 +1,22 @@
 import { Request, Response } from "express"
+import { Document, Types } from "mongoose"
 import { Author } from "../models/Author"
 
 class AuthorController {
   async index(req: Request, res: Response) {
     try {
-      console.log("alo")
+      const authorsMap: (Document<any, any, unknown> & {
+        _id: Types.ObjectId
+      })[] = []
 
-      const authors = Author.find({}).exec()
+      const authors = await Author.find({}).exec()
+
+      authors.forEach((author) => {
+        authorsMap.push(author)
+      })
 
       return res.status(200).send({
-        authors,
+        authors: authorsMap,
       })
     } catch (err) {
       return res.status(500).send({
@@ -22,9 +29,13 @@ class AuthorController {
     try {
       const { name } = req.body
 
-      console.log(name)
+      let author = await Author.findOne({
+        name_lower: name.toLowerCase(),
+      })
 
-      const author = await Author.create({ name })
+      if (!author) {
+        author = await Author.create({ name })
+      }
 
       return res.status(200).send({
         author,

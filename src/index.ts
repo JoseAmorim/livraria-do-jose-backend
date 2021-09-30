@@ -1,6 +1,6 @@
 import express from "express"
 import mongoose from "mongoose"
-import { Genre } from "./models/Genre"
+import cors from "cors"
 import { routes } from "./routes"
 require("dotenv").config()
 // rest of the code remains same
@@ -12,6 +12,7 @@ mongoose.connect(process.env.MONGODB_URL!!, () => {
 
 const PORT = 8000
 
+app.use(cors())
 app.use(express.json())
 app.use(routes)
 

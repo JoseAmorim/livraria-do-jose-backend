@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import { Document, Types } from "mongoose"
 import { PublishingCompany } from "../models/PublishingCompany"
 
 class PublishingCompanyController {
@@ -6,10 +7,18 @@ class PublishingCompanyController {
     try {
       console.log("alo")
 
-      const publishers = PublishingCompany.find({}).exec()
+      const publishersMap: (Document<any, any, unknown> & {
+        _id: Types.ObjectId
+      })[] = []
+
+      const publishers = await PublishingCompany.find({}).exec()
+
+      publishers.forEach((publisher) => {
+        publishersMap.push(publisher)
+      })
 
       return res.status(200).send({
-        publishers,
+        publishers: publishersMap,
       })
     } catch (err) {
       return res.status(500).send({
@@ -22,9 +31,13 @@ class PublishingCompanyController {
     try {
       const { name } = req.body
 
-      console.log(name)
+      let publisher = await PublishingCompany.findOne({
+        name_lower: name.toLowerCase(),
+      })
 
-      const publisher = await PublishingCompany.create({ name })
+      if (!publisher) {
+        publisher = await PublishingCompany.create({ name })
+      }
 
       return res.status(200).send({
         publisher,

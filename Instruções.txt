@@ -1,0 +1,12 @@
+Projeto feito por um aluno só: José Vitor Barros Amorim
+
+frontend: https://github.com/JoseAmorim/livraria-do-jose-frontend
+backend: https://github.com/JoseAmorim/livraria-do-jose-backend
+
+intruções:
+
+- Baixar os 2 projetos localmente pelo github
+- No backend criar um arquivo ".env" e colocar a seguinte linha nele:
+  - MONGODB_URL=mongodb+srv://Joshep:joshepv@cluster0.7zbwn.mongodb.net/database?retryWrites=true&w=majority
+- Instalar as dependencias
+- Executar os dois com o mesmo comando em cada "yarn start" ou "npm start"
