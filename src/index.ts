@@ -2,15 +2,13 @@ import express from "express"
 import mongoose from "mongoose"
 import { Genre } from "./models/Genre"
 import { routes } from "./routes"
+require("dotenv").config()
 // rest of the code remains same
 const app = express()
 
-mongoose.connect(
-  "mongodb+srv://Joshep:joshepv@cluster0.7zbwn.mongodb.net/database?retryWrites=true&w=majority",
-  () => {
-    console.log("connected to database")
-  }
-)
+mongoose.connect(process.env.MONGODB_URL!!, () => {
+  console.log("connected to database")
+})
 
 const PORT = 8000
 
